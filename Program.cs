@@ -41,62 +41,120 @@
 //     }
 // }
 
-// Задача 50. Напишите программу, которая на вход принимает два числа(строка, столбец),
-// проверяя есть ли такая позиция в двумерном массиве и возвращает сообщение о том, 
-// что оно найдено, а также какое число стоит на этом месте или же указание, что такого элемента нет.
+// // Задача 50. Напишите программу, которая на вход принимает два числа(строка, столбец),
+// // проверяя есть ли такая позиция в двумерном массиве и возвращает сообщение о том, 
+// // что оно найдено, а также какое число стоит на этом месте или же указание, что такого элемента нет.
+
+// // Например, задан массив:
+// // 1 4 7 2
+// // 5 9 2 3
+// // 8 4 2 4
+
+// // i = 1, j = 3 -> Такой элемент есть: 3
+// // i = 4, j = 2 -> такого элемента в массиве нет
+
+// Console.Write("Введите номер строки: ");
+// int rowNumber = int.Parse(Console.ReadLine()!);
+
+// Console.Write("Введите номер столбца: ");
+// int columnNumber = int.Parse(Console.ReadLine()!);
+
+// int[,] array = GetArray(3, 4, 0, 10);
+// PrintArray(array);
+// int result = 0;
+
+// SearchElements(array);
+
+// if (result != 0)
+// {
+//     Console.WriteLine($"i = {rowNumber}, j = {columnNumber} -> такого элемент есть: {result}");
+// }
+// else
+// {
+//     Console.WriteLine($"i = {rowNumber}, j = {columnNumber} -> такого элемента в массиве нет");
+// }
+
+// //------------------Метод поиска элемента---------------
+// int SearchElements(int[,] array)
+// {
+//     for (int i = 0; i < array.GetLength(0); i++)
+//     {
+//         for (int j = 0; j < array.GetLength(1); j++)
+//         {
+//             if (rowNumber == i && columnNumber == j) result = array[i,j];
+//         }
+//     }
+//     return result;
+// }
+
+
+// //-----------------Заполнение двумерного массива------------------
+// int[,] GetArray(int m, int n, int minValue, int maxValue)
+// {
+//     int[,] res = new int[m,n];
+//     for (int i = 0; i < m; i++)
+//     {
+//         for (int j = 0; j < n; j++)
+//         {
+//             res[i,j] = new Random().Next(minValue, maxValue);
+//         }
+//     }
+//     return res;
+// }
+
+// //---------------Вывод массива-----------------
+// void PrintArray(int[,] array)
+// {
+//     for (int i = 0; i < array.GetLength(0); i++)
+//     {
+//         for (int j = 0; j < array.GetLength(1); j++)
+//         {
+//             Console.Write($"{array[i,j]} ");
+//         }
+//         Console.WriteLine();
+//     }
+// }
+
+
+// Задача 52. Задайте двумерный массив из целых чисел. 
+// Найдите среднее арифметическое элементов в каждом столбце.
 
 // Например, задан массив:
 // 1 4 7 2
 // 5 9 2 3
 // 8 4 2 4
-
-// i = 1, j = 3 -> Такой элемент есть: 3
-// i = 4, j = 2 -> такого элемента в массиве нет
-
-Console.Write("Введите номер строки: ");
-int rowNumber = int.Parse(Console.ReadLine()!);
-
-Console.Write("Введите номер столбца: ");
-int columnNumber = int.Parse(Console.ReadLine()!);
+// Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
 
 int[,] array = GetArray(3, 4, 0, 10);
 PrintArray(array);
-int result = 0;
-
-SearchElements(array);
-
-if (result != 0)
-{
-    Console.WriteLine($"i = {rowNumber}, j = {columnNumber} -> такого элемент есть: {result}");
-}
-else
-{
-    Console.WriteLine($"i = {rowNumber}, j = {columnNumber} -> такого элемента в массиве нет");
-}
+double[] mean = SearchArithmeticalMean(array);
+System.Console.WriteLine($"Среднее арифметическое каждого столбца: {String.Join("; ", mean)}");
 
 //------------------Метод поиска элемента---------------
-int SearchElements(int[,] array)
+double[] SearchArithmeticalMean(int[,] array)
 {
-    for (int i = 0; i < array.GetLength(0); i++)
+    double[] result = new double[array.GetLength(1)];
+    for (int i = 0; i < array.GetLength(1); i++)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        double summ = 0;
+        for (int j = 0; j < array.GetLength(0); j++)
         {
-            if (rowNumber == i && columnNumber == j) result = array[i,j];
+            summ = summ + array[j,i];
         }
+        result[i] = Math.Round(summ / array.GetLength(0), 1);
     }
     return result;
 }
 
-
 //-----------------Заполнение двумерного массива------------------
 int[,] GetArray(int m, int n, int minValue, int maxValue)
 {
-    int[,] res = new int[m,n];
+    int[,] res = new int[m, n];
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            res[i,j] = new Random().Next(minValue, maxValue);
+            res[i, j] = new Random().Next(minValue, maxValue);
         }
     }
     return res;
@@ -109,18 +167,8 @@ void PrintArray(int[,] array)
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            Console.Write($"{array[i,j]} ");
+            Console.Write($"{array[i, j]} ");
         }
         Console.WriteLine();
     }
 }
-
-
-// Задача 52. Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
-
-// Например, задан массив:
-// 1 4 7 2
-// 5 9 2 3
-// 8 4 2 4
-// Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
-
